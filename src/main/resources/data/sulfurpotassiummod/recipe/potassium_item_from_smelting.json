@@ -1,8 +1,6 @@
 {
   "type": "minecraft:smelting",
-  "ingredient": {
-    "item": "sulfurpotassiummod:raw_potassium"
-  },
+  "ingredient": "sulfurpotassiummod:raw_potassium",
   "result": {
     "id": "sulfurpotassiummod:potassium"
   },

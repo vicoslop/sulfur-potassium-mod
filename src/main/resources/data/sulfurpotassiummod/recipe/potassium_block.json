@@ -6,9 +6,7 @@
     "###"
   ],
   "key": {
-    "#": {
-      "item": "sulfurpotassiummod:potassium"
-    }
+    "#": "sulfurpotassiummod:potassium"
   },
   "result": {
     "id": "sulfurpotassiummod:potassium_block"

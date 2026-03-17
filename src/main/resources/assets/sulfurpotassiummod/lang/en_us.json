@@ -7,5 +7,17 @@
 	"block.sulfurpotassiummod.sulfur_block": "Sulfur Block",
 	"block.sulfurpotassiummod.sulfur_nether_ore": "Sulfur Nether Ore",
 	"block.sulfurpotassiummod.potassium_ore": "Potassium Ore",
-	"block.sulfurpotassiummod.potassium_block": "Potassium Block"
+	"block.sulfurpotassiummod.potassium_block": "Potassium Block",
+
+	"item.sulfurpotassiummod.sulfur_ore": "Sulfur Ore",
+	"item.sulfurpotassiummod.sulfur_block": "Sulfur Block",
+	"item.sulfurpotassiummod.sulfur_nether_ore": "Sulfur Nether Ore",
+	"item.sulfurpotassiummod.potassium_ore": "Potassium Ore",
+	"item.sulfurpotassiummod.potassium_block": "Potassium Block",
+
+	"tag.item.sulfurpotassiummod.dusts.potassium": "Potassium Dusts",
+	"tag.item.sulfurpotassiummod.dusts.sulfur": "Sulfur Dusts",
+	"tag.item.sulfurpotassiummod.ores.potassium_ore": "Potassium Ores",
+	"tag.item.sulfurpotassiummod.ores.sulfur_ore": "Sulfur Ores",
+	"tag.item.sulfurpotassiummod.ores.sulfur_nether_ore": "Nether Sulfur Ores"
 }

@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "id": "sulfurpotassiummod",
-  "version": "2.0.0",
+  "version": "${version}",
 
   "name": "Sulfur & Potassium",
   "description": "A vanilla friendly way to craft more gunpowder!",
@@ -30,10 +30,10 @@
   ],
 
   "depends": {
-    "fabricloader": ">=0.14.6",
+    "fabricloader": ">=0.18.4",
     "fabric-api": "*",
-    "minecraft": "1.21.x",
-    "java": ">=21"
+    "minecraft": "26.1-pre.2",
+    "java": ">=25"
   },
   "suggests": {
     "another-mod": "*"

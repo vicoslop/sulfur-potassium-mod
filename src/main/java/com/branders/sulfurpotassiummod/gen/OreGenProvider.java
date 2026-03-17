@@ -7,24 +7,24 @@ import com.branders.sulfurpotassiummod.config.ConfigValues;
 import com.branders.sulfurpotassiummod.registry.ModBlocks;
 import com.branders.sulfurpotassiummod.registry.ModFeatures;
 
-import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
+import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricDynamicRegistryProvider;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.registry.RegistryKey;
-import net.minecraft.registry.RegistryWrapper.WrapperLookup;
-import net.minecraft.registry.entry.RegistryEntry;
-import net.minecraft.registry.tag.BlockTags;
-import net.minecraft.structure.rule.BlockMatchRuleTest;
-import net.minecraft.structure.rule.TagMatchRuleTest;
-import net.minecraft.world.gen.YOffset;
-import net.minecraft.world.gen.feature.ConfiguredFeature;
-import net.minecraft.world.gen.feature.Feature;
-import net.minecraft.world.gen.feature.OreFeatureConfig;
-import net.minecraft.world.gen.feature.PlacedFeature;
-import net.minecraft.world.gen.placementmodifier.CountPlacementModifier;
-import net.minecraft.world.gen.placementmodifier.HeightRangePlacementModifier;
-import net.minecraft.world.gen.placementmodifier.SquarePlacementModifier;
+import net.minecraft.core.Holder;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.levelgen.VerticalAnchor;
+import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
+import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.configurations.OreConfiguration;
+import net.minecraft.world.level.levelgen.placement.CountPlacement;
+import net.minecraft.world.level.levelgen.placement.HeightRangePlacement;
+import net.minecraft.world.level.levelgen.placement.InSquarePlacement;
+import net.minecraft.world.level.levelgen.placement.PlacedFeature;
+import net.minecraft.world.level.levelgen.structure.templatesystem.BlockMatchTest;
+import net.minecraft.world.level.levelgen.structure.templatesystem.TagMatchTest;
 
 /**
  *  Called from data generation where we create .json files with appropriate values.
@@ -51,11 +51,11 @@ public class OreGenProvider extends FabricDynamicRegistryProvider {
     private static int sulfur_nether_max_height = ConfigValues.CONFIG_SPEC.get("nether_sulfur_max_height");
     private static int sulfur_nether_count = ConfigValues.CONFIG_SPEC.get("nether_sulfur_count");
     
-    private TagMatchRuleTest base_stone = new TagMatchRuleTest(BlockTags.STONE_ORE_REPLACEABLES);
-    private TagMatchRuleTest deepslate = new TagMatchRuleTest(BlockTags.DEEPSLATE_ORE_REPLACEABLES);
-    private BlockMatchRuleTest nether = new BlockMatchRuleTest(Blocks.NETHERRACK);
+    private TagMatchTest base_stone = new TagMatchTest(BlockTags.STONE_ORE_REPLACEABLES);
+    private TagMatchTest deepslate = new TagMatchTest(BlockTags.DEEPSLATE_ORE_REPLACEABLES);
+    private BlockMatchTest nether = new BlockMatchTest(Blocks.NETHERRACK);
     
-    public OreGenProvider(FabricDataOutput output, CompletableFuture<WrapperLookup> registriesFuture) {
+    public OreGenProvider(FabricPackOutput output, CompletableFuture<HolderLookup.Provider> registriesFuture) {
         super(output, registriesFuture);
     }
 
@@ -65,13 +65,13 @@ public class OreGenProvider extends FabricDynamicRegistryProvider {
     }
 
     @Override
-    protected void configure(WrapperLookup registries, Entries entries) {
+    protected void configure(HolderLookup.Provider registries, Entries entries) {
         
-        ConfiguredFeature<?, ?> POTASSIUM_MIDDLE = newFeature(base_stone, ModBlocks.POTASSIUM_ORE.getDefaultState(), potassium_middle_vein_size);
-        ConfiguredFeature<?, ?> POTASSIUM_UPPER  = newFeature(base_stone, ModBlocks.POTASSIUM_ORE.getDefaultState(), potassium_upper_vein_size);
+        ConfiguredFeature<?, ?> POTASSIUM_MIDDLE = newFeature(base_stone, ModBlocks.POTASSIUM_ORE.defaultBlockState(), potassium_middle_vein_size);
+        ConfiguredFeature<?, ?> POTASSIUM_UPPER  = newFeature(base_stone, ModBlocks.POTASSIUM_ORE.defaultBlockState(), potassium_upper_vein_size);
         
-        ConfiguredFeature<?, ?> SULFUR  = newFeature(deepslate, ModBlocks.SULFUR_ORE.getDefaultState(), sulfur_vein_size);
-        ConfiguredFeature<?, ?> SULFUR_NETHER  = newFeature(nether, ModBlocks.SULFUR_NETHER_ORE.getDefaultState(), sulfur_nether_vein_size);
+        ConfiguredFeature<?, ?> SULFUR  = newFeature(deepslate, ModBlocks.SULFUR_ORE.defaultBlockState(), sulfur_vein_size);
+        ConfiguredFeature<?, ?> SULFUR_NETHER  = newFeature(nether, ModBlocks.SULFUR_NETHER_ORE.defaultBlockState(), sulfur_nether_vein_size);
         
         addEntry(entries,
                 ModFeatures.CF_POTASSIUM_MIDDLE, 
@@ -107,20 +107,21 @@ public class OreGenProvider extends FabricDynamicRegistryProvider {
         
     }
 
-    private void addEntry(Entries entries, RegistryKey<ConfiguredFeature<?, ?>> rcf, RegistryKey<PlacedFeature> rpf, ConfiguredFeature<?, ?> cf, int count, int minHeight, int maxHeight) {
-        RegistryEntry<ConfiguredFeature<?, ?>> featureRef = entries.add(rcf, cf);
+    private void addEntry(Entries entries, ResourceKey<ConfiguredFeature<?, ?>> rcf, ResourceKey<PlacedFeature> rpf, ConfiguredFeature<?, ?> cf, int count, int minHeight, int maxHeight) {
+        entries.add(rcf, cf);
+        Holder<ConfiguredFeature<?, ?>> featureRef = Holder.direct(cf);
         PlacedFeature placedFeature = new PlacedFeature(featureRef, Arrays.asList(
-                CountPlacementModifier.of(count),
-                SquarePlacementModifier.of(),
-                HeightRangePlacementModifier.uniform(YOffset.fixed(minHeight), YOffset.fixed(maxHeight))));
+                CountPlacement.of(count),
+                InSquarePlacement.spread(),
+                HeightRangePlacement.uniform(VerticalAnchor.absolute(minHeight), VerticalAnchor.absolute(maxHeight))));
         entries.add(rpf, placedFeature);
     }
     
-    private ConfiguredFeature<?, ?> newFeature(TagMatchRuleTest ruleTest, BlockState blockstate, int size) {
-        return new ConfiguredFeature<>(Feature.ORE, new OreFeatureConfig(ruleTest, blockstate, size));
+    private ConfiguredFeature<?, ?> newFeature(TagMatchTest ruleTest, BlockState blockstate, int size) {
+        return new ConfiguredFeature<>(Feature.ORE, new OreConfiguration(ruleTest, blockstate, size));
     }
     
-    private ConfiguredFeature<?, ?> newFeature(BlockMatchRuleTest ruleTest, BlockState blockstate, int size) {
-        return new ConfiguredFeature<>(Feature.ORE, new OreFeatureConfig(ruleTest, blockstate, size));
+    private ConfiguredFeature<?, ?> newFeature(BlockMatchTest ruleTest, BlockState blockstate, int size) {
+        return new ConfiguredFeature<>(Feature.ORE, new OreConfiguration(ruleTest, blockstate, size));
     }
 }

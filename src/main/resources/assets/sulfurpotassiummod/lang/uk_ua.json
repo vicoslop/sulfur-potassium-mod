@@ -7,5 +7,11 @@
 	"block.sulfurpotassiummod.sulfur_block": "Блок сірки",
 	"block.sulfurpotassiummod.sulfur_nether_ore": "Незерська сірчана руда",
 	"block.sulfurpotassiummod.potassium_ore": "Калієва руда",
-	"block.sulfurpotassiummod.potassium_block": "Блок калію"
+	"block.sulfurpotassiummod.potassium_block": "Блок калію",
+
+	"item.sulfurpotassiummod.sulfur_ore": "Сірчана руда",
+	"item.sulfurpotassiummod.sulfur_block": "Блок сірки",
+	"item.sulfurpotassiummod.sulfur_nether_ore": "Незерська сірчана руда",
+	"item.sulfurpotassiummod.potassium_ore": "Калієва руда",
+	"item.sulfurpotassiummod.potassium_block": "Блок калію"
 }

@@ -2,11 +2,23 @@
 {
 	"item.sulfurpotassiummod.sulfur": "Enxofre",
 	"item.sulfurpotassiummod.potassium": "Potássio",
-	"item.sulfurpotassiummod.raw_potassium": "Raw Potássio",
+	"item.sulfurpotassiummod.raw_potassium": "Potássio Bruto",
 
 	"block.sulfurpotassiummod.sulfur_ore": "Minério de Enxofre",
 	"block.sulfurpotassiummod.sulfur_block": "Bloco de Enxofre",
 	"block.sulfurpotassiummod.sulfur_nether_ore": "Minério de Enxofre do Nether",
 	"block.sulfurpotassiummod.potassium_ore": "Minério de Potássio",
-	"block.sulfurpotassiummod.potassium_block": "Bloco de Potássio"
+	"block.sulfurpotassiummod.potassium_block": "Bloco de Potássio",
+
+	"item.sulfurpotassiummod.sulfur_ore": "Minério de Enxofre",
+	"item.sulfurpotassiummod.sulfur_block": "Bloco de Enxofre",
+	"item.sulfurpotassiummod.sulfur_nether_ore": "Minério de Enxofre do Nether",
+	"item.sulfurpotassiummod.potassium_ore": "Minério de Potássio",
+	"item.sulfurpotassiummod.potassium_block": "Bloco de Potássio",
+
+	"tag.item.sulfurpotassiummod.dusts.potassium": "Pós de Potássio",
+	"tag.item.sulfurpotassiummod.dusts.sulfur": "Pós de Enxofre",
+	"tag.item.sulfurpotassiummod.ores.potassium_ore": "Minérios de Potássio",
+	"tag.item.sulfurpotassiummod.ores.sulfur_ore": "Minérios de Enxofre",
+	"tag.item.sulfurpotassiummod.ores.sulfur_nether_ore": "Minérios de Enxofre do Nether"
 }

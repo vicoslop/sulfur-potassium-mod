@@ -2,17 +2,21 @@ package com.branders.sulfurpotassiummod.registry;
 
 import com.branders.sulfurpotassiummod.SulfurPotassiumMod;
 
-import net.minecraft.block.*;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.item.ItemGroups;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.Registry;
-import net.minecraft.registry.RegistryKey;
-import net.minecraft.sound.BlockSoundGroup;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.math.intprovider.UniformIntProvider;
+import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.util.valueproviders.UniformInt;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.DropExperienceBlock;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.material.MapColor;
 
 /**
  * 	Mod Block registry and references
@@ -20,20 +24,36 @@ import net.minecraft.util.math.intprovider.UniformIntProvider;
  * 	@author Anders <Branders> Blomqvist
  */
 public class ModBlocks {
+
+	private static final ResourceKey<CreativeModeTab> NATURAL_BLOCKS_TAB = tabKey("natural_blocks");
+	private static final ResourceKey<CreativeModeTab> BUILDING_BLOCKS_TAB = tabKey("building_blocks");
 	
 	public static final Block 
-		SULFUR_ORE = registerBlock("sulfur_ore", new ExperienceDroppingBlock(UniformIntProvider.create(2, 4), AbstractBlock.Settings.copy(Blocks.STONE).strength(3.0F, 3.0F).sounds(BlockSoundGroup.DEEPSLATE)), ItemGroups.NATURAL),
-		SULFUR_NETHER_ORE = registerBlock("sulfur_nether_ore", new ExperienceDroppingBlock(UniformIntProvider.create(2, 5), AbstractBlock.Settings.copy(Blocks.STONE).strength(3.0F, 3.0F).sounds(BlockSoundGroup.NETHER_ORE).mapColor(MapColor.DARK_RED)), ItemGroups.NATURAL),
-		SULFUR_BLOCK = registerBlock("sulfur_block", new Block(AbstractBlock.Settings.copy(Blocks.GOLD_BLOCK).strength(5.0F, 6.0F)), ItemGroups.BUILDING_BLOCKS),
-		POTASSIUM_ORE = registerBlock("potassium_ore", new Block(AbstractBlock.Settings.copy(Blocks.STONE).strength(3.0F, 3.0F)), ItemGroups.NATURAL),
-		POTASSIUM_BLOCK = registerBlock("potassium_block", new Block(AbstractBlock.Settings.copy(Blocks.IRON_BLOCK).strength(5.0F, 6.0F).sounds(BlockSoundGroup.METAL)), ItemGroups.BUILDING_BLOCKS);
+		SULFUR_ORE = registerBlock(blockKey("sulfur_ore"), new DropExperienceBlock(UniformInt.of(2, 4), BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).strength(3.0F, 3.0F).sound(SoundType.DEEPSLATE).setId(blockKey("sulfur_ore"))), NATURAL_BLOCKS_TAB),
+		SULFUR_NETHER_ORE = registerBlock(blockKey("sulfur_nether_ore"), new DropExperienceBlock(UniformInt.of(2, 5), BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).strength(3.0F, 3.0F).sound(SoundType.NETHER_ORE).mapColor(MapColor.NETHER).setId(blockKey("sulfur_nether_ore"))), NATURAL_BLOCKS_TAB),
+		SULFUR_BLOCK = registerBlock(blockKey("sulfur_block"), new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.GOLD_BLOCK).strength(5.0F, 6.0F).setId(blockKey("sulfur_block"))), BUILDING_BLOCKS_TAB),
+		POTASSIUM_ORE = registerBlock(blockKey("potassium_ore"), new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).strength(3.0F, 3.0F).setId(blockKey("potassium_ore"))), NATURAL_BLOCKS_TAB),
+		POTASSIUM_BLOCK = registerBlock(blockKey("potassium_block"), new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK).strength(5.0F, 6.0F).sound(SoundType.METAL).setId(blockKey("potassium_block"))), BUILDING_BLOCKS_TAB);
 	
 	// Initialize static variables (registration)
 	public static void register() {}
 	
-	private static Block registerBlock(String name, Block block, RegistryKey<ItemGroup> group) {	
-		Registry.register(Registries.BLOCK, Identifier.of(SulfurPotassiumMod.MOD_ID, name), block);
-		ModItems.registerItem(name, new BlockItem(block, new Item.Settings()), group);
+	private static Block registerBlock(ResourceKey<Block> key, Block block, ResourceKey<CreativeModeTab> group) {	
+		Registry.register(BuiltInRegistries.BLOCK, key, block);
+		String path = key.identifier().getPath();
+		ModItems.registerItem(itemKey(path), new BlockItem(block, new Item.Properties().setId(itemKey(path))), group);
 		return block;
+	}
+
+	private static ResourceKey<Block> blockKey(String path) {
+		return ResourceKey.create(Registries.BLOCK, Identifier.fromNamespaceAndPath(SulfurPotassiumMod.MOD_ID, path));
+	}
+
+	private static ResourceKey<Item> itemKey(String path) {
+		return ResourceKey.create(Registries.ITEM, Identifier.fromNamespaceAndPath(SulfurPotassiumMod.MOD_ID, path));
+	}
+
+	private static ResourceKey<CreativeModeTab> tabKey(String path) {
+		return ResourceKey.create(Registries.CREATIVE_MODE_TAB, Identifier.withDefaultNamespace(path));
 	}
 }

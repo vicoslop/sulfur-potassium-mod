@@ -1,9 +1,7 @@
 {
   "type": "minecraft:crafting_shapeless",
   "ingredients": [
-    {
-      "item": "sulfurpotassiummod:potassium_block"
-    }
+    "sulfurpotassiummod:potassium_block"
   ],
   "result": {
     "id": "sulfurpotassiummod:potassium",

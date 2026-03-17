@@ -7,5 +7,11 @@
 	"block.sulfurpotassiummod.sulfur_block": "Bloque de azufre",
 	"block.sulfurpotassiummod.sulfur_nether_ore": "Mena de azufre del Nether",
 	"block.sulfurpotassiummod.potassium_ore": "Mena de potasio",
-	"block.sulfurpotassiummod.potassium_block": "Bloque de potasio"
+	"block.sulfurpotassiummod.potassium_block": "Bloque de potasio",
+
+	"item.sulfurpotassiummod.sulfur_ore": "Mena de azufre",
+	"item.sulfurpotassiummod.sulfur_block": "Bloque de azufre",
+	"item.sulfurpotassiummod.sulfur_nether_ore": "Mena de azufre del Nether",
+	"item.sulfurpotassiummod.potassium_ore": "Mena de potasio",
+	"item.sulfurpotassiummod.potassium_block": "Bloque de potasio"
 }

@@ -1,5 +1,22 @@
 {
-  "feature": "sulfurpotassiummod:sulfur_ores",
+  "feature": {
+    "type": "minecraft:ore",
+    "config": {
+      "discard_chance_on_air_exposure": 0.0,
+      "size": 9,
+      "targets": [
+        {
+          "state": {
+            "Name": "sulfurpotassiummod:sulfur_ore"
+          },
+          "target": {
+            "predicate_type": "minecraft:tag_match",
+            "tag": "minecraft:deepslate_ore_replaceables"
+          }
+        }
+      ]
+    }
+  },
   "placement": [
     {
       "type": "minecraft:count",

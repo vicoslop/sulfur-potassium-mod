@@ -1,12 +1,8 @@
 {
   "type": "crafting_shapeless",
   "ingredients": [
-    {
-    	"item": "sulfurpotassiummod:sulfur"
-    },
-    {
-    	"item": "sulfurpotassiummod:potassium"
-    }
+    "sulfurpotassiummod:sulfur",
+    "sulfurpotassiummod:potassium"
   ],
   "result": {
     "id": "minecraft:gunpowder",
